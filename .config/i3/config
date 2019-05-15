@@ -106,6 +106,7 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
 
+# Monitor specific workspaces
 workspace $ws1  output eDP-1
 workspace $ws2  output eDP-1
 workspace $ws3  output eDP-1
