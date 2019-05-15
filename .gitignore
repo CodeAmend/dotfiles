@@ -1,0 +1,14 @@
+.bash_history
+.lesshst
+.esd_auth
+.esd_auth
+.Xauthority
+
+.config/gtk-3.0/
+.config/dconf/
+.config/pulse/
+.config/chromium/
+.config/base16-shell/
+
+.config/nvim/plugged/
+.config/htop/
