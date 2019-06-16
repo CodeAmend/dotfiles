@@ -1,16 +1,24 @@
-URxvt.font: xft:monospace:size=13
-URxvt.scrollBar: false
+URxvt.font:                 xft:monospace:size=12
+URxvt.scrollBar:            false
+URxvt.cursorColor:          red
 
-URxvt.perl-ext-common: resize-font
-URxvt.keysym.C-Down:   resize-font:smaller
-URxvt.keysym.C-Up:     resize-font:bigger
+!! Extentions
+URxvt.perl-ext-common:      default,matcher,resize-font,url-select,keyboard-select
+URxvt.colorUL:              #4682B4
 
-/* URxvt.perl-ext-common: clipboard */
-
-/* URxvt.clipboard.autocopy: true */
-/* URxvt.keysym.M-c: perl:clipboard:copy */
-/* URxvt.keysym.M-v: perl:clipboard:paste */
-
+!! resize-font
+URxvt.keysym.C-Down:        resize-font:smaller
+URxvt.keysym.C-Up:          resize-font:bigger
+URxvt.resize-font.step:     1
+!! url-select
+URxvt.keysym.M-u:           perl:url-select:select_next  
+URxvt.url-select.launcher:  /usr/bin/xdg-open
+URxvt.url-select.underline: true
+!! keyboard-select
+URxvt.keysym.M-Escape:      perl:keyboard-select:activate
+!! matcher
+URxvt.url-launcher:         /usr/bin/xdg-open
+URxvt.matcher.button:       1
 
 ! Base16 Default Dark
 ! Scheme: Chris Kempson (http://chriskempson.com)
