@@ -12,17 +12,22 @@ Plug 'tpope/vim-repeat'
 Plug 'wincent/command-t'
 Plug 'mileszs/ack.vim'
 
-Plug 'chriskempson/base16-vim'
+Plug 'justmao945/vim-clang'
+
+"  Plug 'shmargum/vim-sass-colors'
+Plug 'jparise/vim-graphql'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
-
-Plug 'justmao945/vim-clang'
-Plug 'mattn/emmet-vim'
+Plug 'chriskempson/base16-vim'
+Plug 'suy/vim-context-commentstring'
+Plug 'styled-components/vim-styled-components'
+Plug 'hail2u/vim-css3-syntax'
 
 Plug 'w0rp/ale'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'Valloric/YouCompleteMe'
+Plug 'mattn/emmet-vim'
 
 Plug 'sunaku/vim-dasht'
 call plug#end()
@@ -61,6 +66,8 @@ set mouse=a
 set path+=**
 set wildignore+=*/node_modules/*
 set wildignore+=*/__snapshots__/*
+set wildignore+=*/public/*
+set wildignore+=*/static/*
 set wildignore+=.git
 set wildignore+=*.jpg,*.png
 
@@ -144,6 +151,14 @@ nnoremap <ESC> :noh<CR>
 " Use '%%' to search in folder of file opened
 cabbr <expr> %% fnameescape(expand('%'))
 
+" ALE settings
+let g:ale_set_highlights = 0
+let g:ale_fixers = {
+      \  'javascript': [
+      \    'eslint',
+      \  ],
+      \}
+
 " better key bindings for UltiSnipsExpandTrigger
 let g:UltiSnipsExpandTrigger = "<Tab>"
 let g:UltiSnipsJumpForwardTrigger = "<Tab>"
@@ -163,9 +178,8 @@ nnoremap <Leader>k :Dasht<Space>
 " word under cursor
 nnoremap <silent> <Leader>K :call Dasht([expand('<cword>'), expand('<cWORD>')])<Return>
 " nnoremap <silent> <Leader><Leader>K :call Dasht([expand('<cword>'), expand('<cWORD>')], '!')<Return>
-
 let g:dasht_results_window = 'tabnew'
-" let g:dasht_filetype_docsets['js'] = ['node']
+" let g:dasht_filetype_docsets['javascript'] = ['node', 'mongoose']
 """ END DASHT
 
 "Underline currently edited line

@@ -127,6 +127,9 @@ bindsym $mod+Shift+8 move container to workspace $ws8
 bindsym $mod+Shift+9 move container to workspace $ws9
 bindsym $mod+Shift+0 move container to workspace $ws10
 
+# Specific windows
+assign [class="(?i)Postman"] $ws8
+
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
@@ -152,10 +155,7 @@ bindsym $mod+r mode "resize"
 
 # Desktop Wallpaper Random Fill
 exec_always --no-startup-id feh --no-fehbg --recursive --randomize --bg-fill ~/wallpapers &
-
 exec_always --no-startup-id compton --config ~/.config/i3/compton.conf &
-
-
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
 
