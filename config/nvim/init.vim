@@ -1,6 +1,7 @@
 " Set shell
 set shell=/usr/bin/zsh
 
+
 " Plugins
 call plug#begin()
 Plug 'tpope/vim-surround'
@@ -9,43 +10,52 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 
-Plug 'wincent/command-t'
 Plug 'mileszs/ack.vim'
 
-Plug 'justmao945/vim-clang'
-
-"  Plug 'shmargum/vim-sass-colors'
-Plug 'jparise/vim-graphql'
+Plug 'posva/vim-vue'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
+Plug 'chrisbra/Colorizer'
 Plug 'chriskempson/base16-vim'
+Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'suy/vim-context-commentstring'
 Plug 'styled-components/vim-styled-components'
-Plug 'hail2u/vim-css3-syntax'
 
-Plug 'w0rp/ale'
+Plug 'amadeus/vim-convert-color-to'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-Plug 'Valloric/YouCompleteMe'
 Plug 'mattn/emmet-vim'
+Plug 'dense-analysis/ale'
+Plug 'prettier/vim-prettier', {
+  \ 'do': 'yarn install',
+  \ 'branch': 'release/1.x',
+  \ 'for': [
+    \ 'javascript',
+    \ 'css',
+    \ 'json',
+    \ 'graphql',
+    \ 'markdown',
+    \ 'python',
+    \ 'html' ] }
 
-Plug 'sunaku/vim-dasht'
 call plug#end()
 
+filetype plugin indent on
+
 " Plugin setup
-augroup javascript_folding
-  au!
-  au FileType javascript setlocal foldmethod=syntax
-augroup END
+" augroup javascript_folding
+"   au!
+"   au FileType javascript setlocal foldmethod=syntax
+" augroup END
 
 " AUTOLOADZ
 execute pathogen#infect()
 
-let g:clang_library_path='usr/lib64/libclan.so.8'
-let g:clang_user_options='-std=c++11'
+" let g:clang_library_path='usr/lib64/libclan.so.8'
+" let g:clang_user_options='-std=c++11'
 
-let g:ruby_host_prog='/usr/bin/neovim-ruby-host'
-let g:node_host_prog='/usr/bin/neovim-node-host'
+" let g:ruby_host_prog='/usr/bin/neovim-ruby-host'
+" let g:node_host_prog='/usr/bin/neovim-node-host'
 
 
 " COLORS
@@ -54,6 +64,7 @@ if filereadable(expand("~/.vimrc_background"))
   source ~/.vimrc_background
 endif
 
+let g:colorizer_auto_color = 1
 
 " SETS
 set number
@@ -67,6 +78,7 @@ set path+=**
 set wildignore+=*/node_modules/*
 set wildignore+=*/__snapshots__/*
 set wildignore+=*/public/*
+set wildignore+=*/.cache/*
 set wildignore+=*/static/*
 set wildignore+=.git
 set wildignore+=*.jpg,*.png
@@ -75,7 +87,7 @@ set wildignore+=*.jpg,*.png
 set smartindent
 set tabstop=2
 set shiftwidth=2
-set expandtab 
+set expandtab
 
 autocmd InsertLeave * write
 
@@ -87,7 +99,7 @@ set smartcase
 " LEADER
 let mapleader="\<Space>"
 
-" toggle previous buffer 
+" toggle previous buffer
 nnoremap <Leader><Leader> <C-^>
 
 " Fullscreen - open current buffer in new tab
@@ -105,6 +117,12 @@ imap <down> <nop>
 imap <left> <nop>
 imap <right> <nop>
 
+" Move around open buffers easily
+nnoremap <C-h> <C-W><C-H>
+nnoremap <C-j> <C-W><C-J>
+nnoremap <C-k> <C-W><C-K>
+nnoremap <C-l> <C-W><C-L>
+
 " Auto close brackets
 inoremap " ""<left>
 inoremap ' ''<left>
@@ -115,17 +133,11 @@ inoremap { {}<left>
 
 " Close and indent <CR> brackets
 inoremap "<CR> "<CR>"<ESC>O
-inoremap ";<CR> "<CR>";<ESC>O
 inoremap '<CR> '<CR>'<ESC>O
-inoremap ';<CR> '<CR>';<ESC>O
 inoremap `<CR> `<CR>`<ESC>O
-inoremap `;<CR> `<CR>`;<ESC>O
 inoremap {<CR> {<CR>}<ESC>O
-inoremap {;<CR> {<CR>};<ESC>O
 inoremap [<CR> [<CR>]<ESC>O
-inoremap [;<CR> [<CR>];<ESC>O
 inoremap (<CR> (<CR>)<ESC>O
-inoremap (;<CR> (<CR>);<ESC>O
 
 " Brackets and quotes type over closing
 inoremap <expr> " strpart(getline('.'), col('.')-1, 1) == '"' ? "\<Right>" : '"'
@@ -134,13 +146,6 @@ inoremap <expr> ` strpart(getline('.'), col('.')-1, 1) == "`" ? "\<Right>" : "\`
 inoremap <expr> ) strpart(getline('.'), col('.')-1, 1) == ")" ? "\<Right>" : ")"
 inoremap <expr> ] strpart(getline('.'), col('.')-1, 1) == "]" ? "\<Right>" : "]"
 inoremap <expr> } strpart(getline('.'), col('.')-1, 1) == "}" ? "\<Right>" : "}"
-
-
-" Move around open buffers easily
-nnoremap <C-h> <C-W><C-H>
-nnoremap <C-j> <C-W><C-J>
-nnoremap <C-k> <C-W><C-K>
-nnoremap <C-l> <C-W><C-L>
 
 " print the working directory
 nnoremap <LEADER>p :echo expand('%')<CR>
@@ -152,38 +157,29 @@ nnoremap <ESC> :noh<CR>
 cabbr <expr> %% fnameescape(expand('%'))
 
 " ALE settings
-let g:ale_set_highlights = 0
-let g:ale_fixers = {
-      \  'javascript': [
-      \    'eslint',
-      \  ],
-      \}
+let g:ale_linters_explicit = 1
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\
+\}
 
 " better key bindings for UltiSnipsExpandTrigger
 let g:UltiSnipsExpandTrigger = "<Tab>"
 let g:UltiSnipsJumpForwardTrigger = "<Tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<S-Tab>"
+highlight clear ALEErrorSign
+highlight clear ALEWarningSign
 
-let g:UltiSnipsMappingsToIgnore = ['autocomplete']
+" let g:UltiSnipsMappingsToIgnore = ['autocomplete']
 
-let g:ycm_key_list_select_completion=[]
-let g:ycm_key_list_previous_completion=[]
+""Underline currently edited line
+"if !has("gui_running")
+"    :autocmd InsertEnter * set cul
+"    :autocmd InsertLeave * set nocul
+"endif
 
+let g:cpp_class_scope_highlight = 1
+let g:cpp_member_variable_highlight = 1
+let g:cpp_class_decl_highlight = 1
+let g:cpp_posix_standard = 1
 
-""" DASHT
-" type in search
-nnoremap <Leader>k :Dasht<Space>
-" nnoremap <Leader><Leader>k :Dasht!<Space>
-
-" word under cursor
-nnoremap <silent> <Leader>K :call Dasht([expand('<cword>'), expand('<cWORD>')])<Return>
-" nnoremap <silent> <Leader><Leader>K :call Dasht([expand('<cword>'), expand('<cWORD>')], '!')<Return>
-let g:dasht_results_window = 'tabnew'
-" let g:dasht_filetype_docsets['javascript'] = ['node', 'mongoose']
-""" END DASHT
-
-"Underline currently edited line
-if !has("gui_running")
-    :autocmd InsertEnter * set cul
-    :autocmd InsertLeave * set nocul
-endif
