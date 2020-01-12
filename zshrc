@@ -5,7 +5,7 @@ EDITOR=nvim
 VISUAL=nvim
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/mibru/.oh-my-zsh"
+export ZSH=$HOME/.oh-my-zsh
 
 autoload -U edit-command-line
 # Emacs style
@@ -76,9 +76,12 @@ man() {
     command man "$@"
 }
 
-GATSBY="$HOME/code/learning/gatsby-projects"
-BACKROADS="$HOME/code/learning/gatsby-projects/backroads"
-MARKMAPS="$HOME/code/clients/mark-maps"
+MARKMAPS="$HOME/code/clients/duffy.mark/carousel-maps"
+MAPSERVER="$HOME/code/clients/duffy.mark/headless-do-map-renderer/headless-map-renderer"
+MICHALAUTHOR="$HOME/code/clients/michael.author/"
+OPENLOVEQUIZ="$HOME/code/clients/michael.author/super-secret-open-love-quiz"
+ALGORITHMS="$HOME/code/learning/udemy/algorithms-javascript-colt"
+CPP="$HOME/code/learning/c++"
 
 # Syntax Highlighting
 # source ~/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
