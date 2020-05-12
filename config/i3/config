@@ -155,11 +155,11 @@ bindsym $mod+r mode "resize"
 
 # Desktop Wallpaper Random Fill
 exec_always --no-startup-id feh --no-fehbg --recursive --randomize --bg-fill ~/wallpapers &
-exec_always --no-startup-id compton --config home/mibru/.config/i3/compton.conf &
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
 exec_always --no-startup-id unclutter & 
 
+exec_always --no-startup-id compton --config /home/mibru/.config/i3/compton.conf &
 
 # Audio Volume keyboard keys
 bindsym XF86AudioRaiseVolume exec amixer -q set Master 5%+ unmute
